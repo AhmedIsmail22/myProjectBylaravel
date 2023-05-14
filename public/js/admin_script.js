@@ -9,7 +9,7 @@ document.querySelector('#menu-btn').onclick = () =>{
 document.querySelector('#user-btn').onclick = () =>{
    profile.classList.toggle('active');
    navbar.classList.remove('active');
-}
+} 
 
 window.onscroll = () =>{
    navbar.classList.remove('active');

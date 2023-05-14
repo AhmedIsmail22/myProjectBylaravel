@@ -16,25 +16,6 @@
           <h3>welcome!</h3> 
           <a href="{{url("profile/updateForm")}}" class="btn">update profile</a>
        </div>
- 
-       {{-- <div class="box">
-          <h3><span>$</span> {{$pendingOrderTotal}} <span>/-</span></h3>
-          <p>total pendings</p>
-          <a href="placed_orders.php" class="btn">see orders</a>
-       </div>
- 
-       <div class="box">
-          <h3><span>$</span> {{$completedOrderTotal}} <span>/-</span></h3>
-          <p>completed orders</p>
-          <a href="placed_orders.php" class="btn">see orders</a>
-       </div>
- 
-       <div class="box">
-          <h3> <span>$</span> {{$canceledOrderTotal}} </h3>
-          <p>orders placed</p>
-          <a href="placed_orders.php" class="btn">see orders</a>
-       </div> --}}
- 
        <div class="box">
           <h3>{{$products}}</h3>
           <p>products added</p>

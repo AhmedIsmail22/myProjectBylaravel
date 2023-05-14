@@ -30,11 +30,14 @@ Route::middleware("guest")->group(function(){
     Route::post("admin/login", [UserController::class, "login"]);
 
     //user
-    Route::get("register", [UserController::class, "registerForm"]);
-    Route::post("register", [UserController::class, "register"]);
-    Route::get("login", [UserController::class, "loginForm"]);
-    Route::post("login", [UserController::class, "loginUser"]);
-    Route::get("logout", [UserController::class, "logout"]);
+    Route::controller(UserController::class)->group(function(){
+
+        Route::get("register", "registerForm");
+        Route::post("register", "register");
+        Route::get("login", "loginForm");
+        Route::post("login", "loginUser");
+        Route::get("logout", "logout");
+    });
 });
 
 
@@ -43,69 +46,104 @@ Route::middleware("auth")->group(function(){
     Route::get("admin/dashboard", [AdminController::class, "dashboard"]);
 
     //products
-    Route::get("admin/products", [ProductController::class, "all"]);
-    Route::get("admin/products/add", [ProductController::class, "add"]);
-    Route::post("admin/products/add", [ProductController::class, "addProduct"]);
-    Route::get("admin/products/update/{id}", [ProductController::class, "updateProduct"]);
-    Route::get("admin/products/delete/{id}", [ProductController::class, "delete"]);
-    Route::post("admin/products/update/{id}", [ProductController::class, "update"]);
-    Route::get("product/show/{id}", [ProductController::class, "show"]);
+    Route::controller(ProductController::class)->group(function(){
+        Route::get("admin/products", "all");
+        Route::get("admin/products/add", "add");
+        Route::post("admin/products/add", "addProduct");
+        Route::get("admin/products/update/{id}", "updateProduct");
+        Route::get("admin/products/delete/{id}", "delete");
+        Route::post("admin/products/update/{id}", "update");
+        Route::get("product/show/{id}", "show");
+    });
 
     //categories
-    Route::get("admin/categories", [CategoryController::class, "all"]);
-    Route::get("admin/categories/add", [CategoryController::class, "addForm"]);
-    Route::post("admin/categories/add", [CategoryController::class, "add"]);
-    Route::get("admin/categories/update/{id}", [CategoryController::class, "updateForm"]);
-    Route::post("admin/categories/update/{id}", [CategoryController::class, "update"]);
-    Route::get("admin/categories/delete/{id}", [CategoryController::class, "delete"]);
+    Route::controller(CategoryController::class)->group(function(){
+
+        Route::get("admin/categories", "all");
+        Route::get("admin/categories/add", "addForm");
+        Route::post("admin/categories/add", "add");
+        Route::get("admin/categories/update/{id}", "updateForm");
+        Route::post("admin/categories/update/{id}", "update");
+        Route::get("admin/categories/delete/{id}", "delete");
+    });
 
     //users
-    Route::get("profile/updateForm", [UserController::class, "updateForm"]);
-    Route::post("profile/update", [UserController::class, "update"]);
+    Route::controller(UserController::class)->group(function(){
+
+        Route::get("profile/updateForm", "updateForm");
+        Route::post("profile/update", "update");
+        Route::get("logout","logout");
+    });
     //admins
-    Route::get("admin/users", [AdminController::class, "showUsers"]);
-    Route::get("admin/users/delete/{id}", [AdminController::class, "deleteUser"]);
-    Route::get("admin/admins", [AdminController::class, "showAdmins"]);
-    Route::get("admin/register", [AdminController::class, "registerAdmin"]);
-    Route::post("admin/register", [AdminController::class, "addAdmin"]);
-    Route::get("admin/update/{id}", [AdminController::class, "updateForm"]);
-    Route::post("admin/update/{id}", [AdminController::class, "update"]);
-    Route::get("admin/delete/{id}", [AdminController::class, "delete"]);
-    Route::get("admin/message/delete/{id}", [MessageController::class, "delete"]);
-    Route::get("admin/messages", [MessageController::class, "show"]);
+    Route::controller(AdminController::class)->group(function(){
+
+        Route::get("admin/users", "showUsers");
+        Route::get("admin/users/delete/{id}", "deleteUser");
+        Route::get("admin/admins", "showAdmins");
+        Route::get("admin/register", "registerAdmin");
+        Route::post("admin/register", "addAdmin");
+        Route::get("admin/update/{id}", "updateForm");
+        Route::post("admin/update/{id}", "update");
+        Route::get("admin/delete/{id}", "delete");
+    });
+
+    //message
+    Route::controller(MessageController::class)->group(function(){
+
+        Route::get("admin/message/delete/{id}","delete");
+        Route::get("admin/messages","show");
+    });
 
     //cart
-    Route::get("cart/all", [CartController::class, "all"]);
-    Route::post("cart/add/{id}", [CartController::class, "add"]);
-    Route::post("cart/update/{id}", [CartController::class, "update"]);
-    Route::post("cart/delete/{id}", [CartController::class, "delete"]);
-    Route::get("cart/delete/all", [CartController::class, "deleteAll"]);
+    Route::controller(MessageController::class)->group(function(){
+
+        Route::get("cart/all","all");
+        Route::post("cart/add/{id}","add");
+        Route::post("cart/update/{id}","update");
+        Route::post("cart/delete/{id}","delete");
+        Route::get("cart/delete/all","deleteAll");
+    });
 
     //wishlist
-    Route::get("wishlist/all", [WishlistController::class, "all"]);
-    Route::post("wishlist/add/{id}", [WishlistController::class, "add"]);
-    Route::post("wishlist/delete/{id}", [WishlistController::class, "delete"]);
-    Route::get("wishlist/delete/all", [WishlistController::class, "deleteAll"]);
+    Route::controller(WishlistController::class)->group(function(){
+
+        Route::get("wishlist/all","all");
+        Route::post("wishlist/add/{id}","add");
+        Route::post("wishlist/delete/{id}","delete");
+        Route::get("wishlist/delete/all","deleteAll");
+    });
 
 
     // order
-    Route::get("order/checkout", [OrderController::class, "checkout"]);
-    Route::post("order/add", [OrderController::class, "add"]);
-    Route::get("orders", [OrderController::class, "all"]);
-    Route::get("admin/orders", [OrderController::class, "allOrders"]);
+    Route::controller(OrderController::class)->group(function(){
 
-    //shop
-;    Route::get("logout", [UserController::class, "logout"]);
+        Route::get("order/checkout","checkout");
+        Route::post("order/add","add");
+        Route::get("orders","all");
+        Route::get("admin/orders","allOrders");
+    });
+
 });
 
 //any one
-Route::get("home", [HomeController::class, "show"]);
-Route::get("/", [HomeController::class, "show"]);
-Route::get("contact", [MessageController::class, "messageForm"]);
-Route::post("message/send", [MessageController::class, "send"]);
-Route::get("shop", [ProductController::class, "shop"]);
-Route::get("search", [ProductController::class, "productSearch"]);
-Route::post("search", [ProductController::class, "search"]);
+Route::controller(HomeController::class)->group(function(){
+    Route::get("home", "show");
+Route::get("/", "show");
+});
+
+Route::controller(MessageController::class)->group(function(){
+    Route::get("contact","messageForm");
+Route::post("message/send","send");
+});
+
+Route::controller(ProductController::class)->group(function(){
+    Route::get("shop", "shop");
+Route::get("search", "productSearch");
+Route::post("search", "search");
+});
+
+
+
 Route::get("about", function(){
     return View("about.about");
 });
