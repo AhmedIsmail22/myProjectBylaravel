@@ -12,9 +12,6 @@ class HomeController extends Controller
 
     //show
     public function show(){
-        if(Auth::user() && Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $categories = Category::all();
         $products = Product::all();
         return View("home.home", compact("categories", "products"));

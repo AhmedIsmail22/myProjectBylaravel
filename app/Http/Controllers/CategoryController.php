@@ -14,9 +14,6 @@ class CategoryController extends Controller
     //all
     public function all(){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
         $categories = Category::all();
         return View("categories.all", compact("categories"));
     }
@@ -25,9 +22,6 @@ class CategoryController extends Controller
     //addForm
     public function addForm(){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
         return View("categories.add");
     }
 
@@ -36,9 +30,6 @@ class CategoryController extends Controller
     public function add(Request $request){
 
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
         $data = $request->validate([
             "name" => "required|string|min:3|unique:categories,name",
             "image" => "required|image|mimes:png,jpg,gif,jpeg,webp",
@@ -54,9 +45,6 @@ class CategoryController extends Controller
     //updateform
     public function updateForm(Request $request, $id){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
         $category = Category::findOrFail($id);
         return View("categories.update", compact("category"));
     }
@@ -65,9 +53,6 @@ class CategoryController extends Controller
     // update
     public function update(Request $request, $id){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
         $data = $request->validate([
             "name" => "required|string|min:3",
             "desc" => "required|min:10|string|max:150"

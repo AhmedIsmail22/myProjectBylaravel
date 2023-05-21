@@ -24,36 +24,12 @@ class AdminController extends Controller
     //dashboard
     public function dashboard(){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
-        // $pendingOrder = Order::where("order", "=", "Pending")->get();
-        // $canceledOrder = Order::where("order", "=", "Canceled")->get();
-        // $completedOrder = Order::where("order", "=", "Completed")->get();
-        // $products = Order::where("order", "=", "Completed")->get();
-        
-        // $pendingOrderTotal = 0;
-        // $canceledOrderTotal = 0;
-        // $completedOrderTotal = 0;
-        // foreach($pendingOrder as $order){
-        //     $pendingOrderTotal += $order->total_price;
-        // }
-        // foreach($canceledOrder as $order){
-        //     $canceledOrderTotal += $order->total_price;
-        // }
-        // foreach($completedOrder as $order){
-        //     $completedOrderTotal += $order->total_price;
-        // }
-
         $products = count(Product::all());
         $users = count(User::where("role", "=", "user")->get());
         $admins = count(User::where("role", "=", "admin")->get());
         $messages = count(Message::select()->where("status","unread")->get());
 
         $data  = [
-            // "pendingOrderTotal" => $pendingOrderTotal, 
-            // "canceledOrderTotal" => $canceledOrderTotal,
-            // "completedOrderTotal" => $completedOrderTotal,
             "products" => $products,
             "users" => $users,
             "admins" => $admins,
@@ -66,9 +42,7 @@ class AdminController extends Controller
 
     //show User
     public function showUsers(){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $users = User::where("role", "=", "user")->get();
 
         return View("users.all", compact("users"));
@@ -77,9 +51,7 @@ class AdminController extends Controller
     //deleteUser
 
     public function deleteUser($id){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $user = User::findOrFail($id);
 
         $user->delete();
@@ -89,9 +61,7 @@ class AdminController extends Controller
 
     //all
     public function showAdmins(){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $admins = User::where("role", "=", "admin")->get();
 
         return View("admin.all", compact("admins"));
@@ -99,18 +69,14 @@ class AdminController extends Controller
 
     //registerForm
     public function registerAdmin(){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         return View("admin.register");
     }
 
 
     //addadmin
     public function addAdmin(Request $request){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $data = $request->validate([
             "name" => "required|string|min:3",
             "password" => "required|string|min:3",
@@ -125,9 +91,7 @@ class AdminController extends Controller
 
     //updateForm
     public function updateForm($id){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $admin = User::findOrFail($id);
 
         return View("admin.update", compact("admin"));
@@ -136,9 +100,7 @@ class AdminController extends Controller
 
     //update
     public function update(Request $request, $id){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $admin = User::findOrFail($id);
 
         $data = $request->validate([
@@ -158,9 +120,7 @@ class AdminController extends Controller
 
     //delete
     public function delete($id){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $admin = User::findOrFail($id);
 
         $admin->delete();

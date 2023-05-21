@@ -11,9 +11,6 @@ class OrderController extends Controller
 {
     public function all(){
 
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $orders = Auth::user()->order;
 
         return View("orders.all", compact("orders"));
@@ -22,9 +19,6 @@ class OrderController extends Controller
 
     public function allOrders(){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
         $orders = Order::all();
         return View("admin.orders", compact("orders"));
     }
@@ -40,9 +34,6 @@ class OrderController extends Controller
 
     public function add(Request $request){
 
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
 
         $data = $request->validate([
             "email" => "required|string|exists:users,email",

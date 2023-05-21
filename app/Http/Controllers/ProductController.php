@@ -15,9 +15,7 @@ class ProductController extends Controller
     //All
     public function all(){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+       
         $products = Product::all();
         return View("products.all", compact("products"));
     }
@@ -26,9 +24,7 @@ class ProductController extends Controller
     //add
     public function add(){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+       
         $categories = Category::all();
         return View("products.add", compact("categories"));
     }
@@ -38,9 +34,7 @@ class ProductController extends Controller
     // addProduct
     public function addProduct(Request $request){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+       
         $data = $request->validate([
             "name" => "required|string|min:3|unique:products,name",
             "quantity" => "required|integer|gt:0",
@@ -65,9 +59,7 @@ class ProductController extends Controller
 
     public function updateProduct($id){
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+       
         $product = Product::findOrFail($id);
         return View("products.update", compact("product"));
     }
@@ -75,10 +67,7 @@ class ProductController extends Controller
 
     //show
     public function show($id){
-
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
+        
         $product = Product::findOrFail($id);
 
         return View("products.show", compact("product"));
@@ -90,9 +79,7 @@ class ProductController extends Controller
     public function update(Request $request, $id){
 
 
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+       
         $product = Product::findOrFail($id);
 
 

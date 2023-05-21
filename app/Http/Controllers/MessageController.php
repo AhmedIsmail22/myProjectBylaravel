@@ -12,18 +12,12 @@ class MessageController extends Controller
 
     //form
     public function messageForm(){
-        if(Auth::user() && Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         return View("contact.contact");
     }
 
     //send
     public function send(Request $request){
 
-        if(Auth::user() && Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $data = $request->validate([
             "name" => "required|string|min:3",
             "email" => "required|email",
@@ -39,9 +33,7 @@ class MessageController extends Controller
 
     //show
     public function show(){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
 
         $newMessages = Message::select()->where("status", "=", "unread")->orderBy("created_at", "desc")->get();
         $oldMessages = Message::select()->where("status", "=", "read")->orderBy("created_at", "desc")->get();
@@ -54,9 +46,7 @@ class MessageController extends Controller
 
     //delete
     public function delete($id){
-        if(Auth::user()->role == "user"){
-            return redirect(url("/"));
-        }
+
         $message = Message::findOrFail($id);
 
         $message->delete();

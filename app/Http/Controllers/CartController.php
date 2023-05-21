@@ -16,9 +16,6 @@ class CartController extends Controller
 
     //All
     public function all (){
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $carts = Auth::user()->cart;
         
         return View("cart.all", compact("carts"));
@@ -27,9 +24,6 @@ class CartController extends Controller
     ///add to cart
     public function add(Request $request){
 
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $data = $request->validate([
             "product_id" => "unique:carts,product_id|exists:products,id",
             "quantity" => "required|integer",
@@ -48,9 +42,6 @@ class CartController extends Controller
     //update cart
     public function update(Request $request, $id){
 
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $data = $request->validate([
             "product_id" => "unique:carts,product_id|exists:products,id",
             "quantity" => "required|integer",
@@ -66,9 +57,6 @@ class CartController extends Controller
     // delete cart
     public function delete($id){
 
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $cart = Cart::findOrFail($id);
 
         $cart->delete();
@@ -80,9 +68,6 @@ class CartController extends Controller
     //delete All
     public function deleteAll(){
 
-        if(Auth::user()->role == "admin"){
-            return redirect(url("admin/dashboard"));
-        }
         $carts = Auth::user()->cart;
         foreach($carts as $cart){
             $cart->delete();

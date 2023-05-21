@@ -6,9 +6,16 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserController extends Controller
 {
+
+    public function index(){
+        $user = User::find(1);
+       return  QrCode::generate(url("index"));
+    }
+
     public function loginForm (){
         return View("users.login", ["error" => ""]);
     }

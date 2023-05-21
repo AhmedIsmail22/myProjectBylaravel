@@ -43,6 +43,7 @@ Route::middleware("guest")->group(function(){
 
 //Is Login
 Route::middleware("auth")->group(function(){
+   Route::middleware("is_admin")->group(function(){
     Route::get("admin/dashboard", [AdminController::class, "dashboard"]);
 
     //products
@@ -67,13 +68,6 @@ Route::middleware("auth")->group(function(){
         Route::get("admin/categories/delete/{id}", "delete");
     });
 
-    //users
-    Route::controller(UserController::class)->group(function(){
-
-        Route::get("profile/updateForm", "updateForm");
-        Route::post("profile/update", "update");
-        Route::get("logout","logout");
-    });
     //admins
     Route::controller(AdminController::class)->group(function(){
 
@@ -87,13 +81,25 @@ Route::middleware("auth")->group(function(){
         Route::get("admin/delete/{id}", "delete");
     });
 
+
     //message
     Route::controller(MessageController::class)->group(function(){
 
         Route::get("admin/message/delete/{id}","delete");
         Route::get("admin/messages","show");
     });
+   });
 
+
+   //users
+Route::controller(UserController::class)->group(function(){
+
+      Route::get("profile/updateForm", "updateForm");
+      Route::post("profile/update", "update");
+      Route::get("logout","logout");
+  });
+
+Route::middleware("is_user")->group(function(){
     //cart
     Route::controller(MessageController::class)->group(function(){
 
@@ -112,15 +118,16 @@ Route::middleware("auth")->group(function(){
         Route::post("wishlist/delete/{id}","delete");
         Route::get("wishlist/delete/all","deleteAll");
     });
+    });
 
 
     // order
     Route::controller(OrderController::class)->group(function(){
 
-        Route::get("order/checkout","checkout");
-        Route::post("order/add","add");
-        Route::get("orders","all");
-        Route::get("admin/orders","allOrders");
+        Route::get("order/checkout","checkout")->middleware("is_user");
+        Route::post("order/add","add")->middleware("is_user");
+        Route::get("orders","all")->middleware("is_user");
+        Route::get("admin/orders","allOrders")->middleware("is_admin");
     });
 
 });
@@ -138,11 +145,11 @@ Route::post("message/send","send");
 
 Route::controller(ProductController::class)->group(function(){
     Route::get("shop", "shop");
-Route::get("search", "productSearch");
-Route::post("search", "search");
-});
+    Route::get("search", "productSearch");
+    Route::post("search", "search");
+    });
 
-
+Route::get("index", [UserController::class, "index"]);
 
 Route::get("about", function(){
     return View("about.about");
